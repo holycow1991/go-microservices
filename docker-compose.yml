@@ -1,0 +1,57 @@
+version: '3.5'
+
+services:
+  auth_db:
+    container_name: auth_pg
+    image: postgres
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+      PGDATA: /data/postgres
+    volumes:
+       - auth_volume:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  order_db:
+    container_name: order_pg
+    image: postgres
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+      PGDATA: /data/postgres
+    volumes:
+       - order_volume:/data/postgres
+    ports:
+      - "5433:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+
+  product_db:
+    container_name: product_db
+    image: postgres
+    environment:
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+      PGDATA: /data/postgres
+    volumes:
+       - product_volume:/data/postgres
+    ports:
+      - "5434:5432"
+    networks:
+      - postgres
+    restart: unless-stopped
+  
+
+networks:
+  postgres:
+    driver: bridge
+
+volumes:
+    auth_volume:
+    order_volume:
+    product_volume:
